@@ -19,3 +19,13 @@ impl Shot {
         return self.y;
     }
 }
+
+#[test]
+fn test_get_x() {
+    assert_eq!(3, Shot::new(3, 5).get_x());
+}
+
+#[test]
+fn test_get_y() {
+    assert_eq!(5, Shot::new(3, 5).get_y());
+}

@@ -38,10 +38,10 @@ impl Fleet {
                 let position_x = if is_horizontal { rand::thread_rng().gen_range(1, board.get_width() - ship_size + 1) } else { rand::thread_rng().gen_range(1, board.get_width() + 1) };
                 let position_y = if is_horizontal { rand::thread_rng().gen_range(1, board.get_height() + 1) } else { rand::thread_rng().gen_range(1, board.get_height() - ship_size + 1) };
                 if self.add_ship(&board, Ship::new(position_x, position_y, direction, ship_size + 0)) {
-                    println!("Place ship: position={}{}, horizontal={}, size={}", Stringutil::get_character(position_x).unwrap(), position_y, is_horizontal, ship_size);
+                    println!("Place ship: position={}{}, horizontal={}, size={}", Stringutil::get_character_in_alphabet(position_x).unwrap(), position_y, is_horizontal, ship_size);
                     break;
                 } else {
-                    println!("Failed to place ship: position={}{}, horizontal={}, size={}", Stringutil::get_character(position_x).unwrap(), position_y, is_horizontal, ship_size);
+                    println!("Failed to place ship: position={}{}, horizontal={}, size={}", Stringutil::get_character_in_alphabet(position_x).unwrap(), position_y, is_horizontal, ship_size);
                 }
             }
         }
@@ -53,7 +53,7 @@ impl Fleet {
             let length_y = if ship.is_direction(Direction::Horizontal) { ship.get_position().get_y() + 1 } else { ship.get_position().get_y() + ship.get_length() };
             for i in ship.get_position().get_x() - 1..length_x + 1 {
                 for j in ship.get_position().get_y() - 1..length_y + 1 {
-                    if board.coords_is_valid(i, j) && self.is_ship_here(i, j) {
+                    if board.is_valid(i, j) && self.is_ship_here(i, j) {
                         return false;
                     }
                 }

@@ -19,3 +19,13 @@ impl Point {
         self.y
     }
 }
+
+#[test]
+fn test_get_x() {
+    assert_eq!(3, Point::new(3, 5).get_x());
+}
+
+#[test]
+fn test_get_y() {
+    assert_eq!(5, Point::new(3, 5).get_y());
+}
