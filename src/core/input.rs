@@ -1,6 +1,6 @@
 use std::io::stdin;
 
-use game::Game as Game;
+use core::game::Game as Game;
 
 pub fn handle(game: &mut Game) {
     println!("Enter a attack point (for example A1):");

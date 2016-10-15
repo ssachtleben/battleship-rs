@@ -6,3 +6,4 @@ authors = ["ssachtleben <ssachtleben@gmail.com>"]
 [dependencies]
 rand = "^0.3.0"
 ansi_term = "^0.9"
+terminal_size = "^0.1.5"
