@@ -47,21 +47,40 @@ impl Ship {
 }
 
 #[test]
-fn test_is_here_positive() {
-    let ship1: Ship = Ship::new(2, 5, Direction::Horizontal, 3);
-    assert_eq!(true, ship1.is_here(2, 5));
-    assert_eq!(true, ship1.is_here(4, 5));
-    let ship2: Ship = Ship::new(2, 5, Direction::Vertical, 3);
-    assert_eq!(true, ship2.is_here(2, 5));
-    assert_eq!(true, ship2.is_here(2, 7));
+fn test_get_position() {
+    let ship: Ship = Ship::new(3, 5, Direction::Horizontal, 5);
+    assert_eq!(3, ship.get_position().get_x());
+    assert_eq!(5, ship.get_position().get_y());
 }
 
 #[test]
-fn test_is_here_negative() {
+fn test_get_direction() {
+    let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
+    assert_eq!(true, ship.is_direction(Direction::Horizontal)); // TODO: use get_direction func
+}
+
+#[test]
+fn test_is_direction() {
+    let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
+    assert_eq!(true, ship.is_direction(Direction::Horizontal));
+}
+
+#[test]
+fn test_get_length() {
+    let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
+    assert_eq!(5, ship.get_length());
+}
+
+#[test]
+fn test_is_here() {
     let ship1: Ship = Ship::new(2, 5, Direction::Horizontal, 3);
+    assert_eq!(true, ship1.is_here(2, 5));
+    assert_eq!(true, ship1.is_here(4, 5));
     assert_eq!(false, ship1.is_here(1, 5));
     assert_eq!(false, ship1.is_here(5, 5));
     let ship2: Ship = Ship::new(2, 5, Direction::Vertical, 3);
+    assert_eq!(true, ship2.is_here(2, 5));
+    assert_eq!(true, ship2.is_here(2, 7));
     assert_eq!(false, ship2.is_here(2, 4));
     assert_eq!(false, ship2.is_here(2, 8));
 }
