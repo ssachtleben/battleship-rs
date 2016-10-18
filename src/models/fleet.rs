@@ -8,6 +8,8 @@ use utils::stringutil as Stringutil;
 use std::collections::LinkedList;
 use rand::Rng;
 
+static FLEET_SIZE: [usize; 5] = [5, 4, 3, 3, 2];
+
 pub struct Fleet {
     size: [usize; 5],
     pub ships: LinkedList<Ship>
@@ -16,7 +18,7 @@ pub struct Fleet {
 impl Fleet {
     pub fn new() -> Fleet {
         Fleet {
-            size: [5, 4, 3, 3, 2],
+            size: FLEET_SIZE,
             ships: LinkedList::new()
         }
     }
@@ -25,9 +27,9 @@ impl Fleet {
         return self.size;
     }
 
-//    pub fn get_ships(&self) -> LinkedList<Ship> {
-//        return self.ships;
-//    }
+    pub fn get_ships(&self) -> &LinkedList<Ship> {
+        return &self.ships;
+    }
 
     pub fn create(&mut self, board: &Board) {
         for ship_size in self.size.clone().iter() {
@@ -75,4 +77,34 @@ impl Fleet {
         }
         return false;
     }
+}
+
+#[test]
+fn get_size_test() {
+    assert_eq!(FLEET_SIZE, Fleet::new().get_size());
+}
+
+#[test]
+fn get_ships_test() {
+    assert_eq!(true, Fleet::new().get_ships().len() == 0);
+}
+
+#[test]
+fn create_test() {
+    let board: Board = Board::new(10, 10);
+    let mut fleet: Fleet = Fleet::new();
+    fleet.create(&board);
+    assert_eq!(FLEET_SIZE.len(), fleet.get_size().len());
+}
+
+#[test]
+fn is_ship_here_test() {
+    let board: Board = Board::new(10, 10);
+    let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
+    let mut fleet: Fleet = Fleet::new();
+    fleet.add_ship(&board, ship);
+    assert_eq!(true, fleet.is_ship_here(1, 1));
+    assert_eq!(true, fleet.is_ship_here(5, 1));
+    assert_eq!(false, fleet.is_ship_here(1, 2));
+    assert_eq!(false, fleet.is_ship_here(6, 1));
 }

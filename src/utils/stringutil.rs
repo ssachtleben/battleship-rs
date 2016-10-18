@@ -16,13 +16,13 @@ pub fn get_position_in_alphabet(val: char) -> Option<usize> {
 }
 
 #[test]
-fn test_get_character_in_alphabet() {
+fn get_character_in_alphabet_test() {
     assert_eq!(Some('A'), get_character_in_alphabet(1));
     assert_eq!(None, get_character_in_alphabet(27));
 }
 
 #[test]
-fn test_get_position_in_alphabet() {
+fn get_position_in_alphabet_test() {
     assert_eq!(Some(5), get_position_in_alphabet('E'));
     assert_eq!(None, get_position_in_alphabet('!'));
 }

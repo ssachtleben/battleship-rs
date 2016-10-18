@@ -1,3 +1,5 @@
+use core::input as input;
+use models::player::Player as Player;
 use models::board::Board as Board;
 use models::fleet::Fleet as Fleet;
 use models::ship::Direction as Direction;
@@ -6,32 +8,48 @@ use utils::stringutil as Stringutil;
 use std::collections::LinkedList;
 use ansi_term::Colour;
 
-static BOARD_WIDTH: usize = 10;
-static BOARD_HEIGHT: usize = 10;
+pub static BOARD_WIDTH: usize = 10;
+pub static BOARD_HEIGHT: usize = 10;
 
 pub struct Game {
-    pub board: Board,
-    pub fleet: Fleet,
-    hits: LinkedList<(usize, usize)>
+    players: LinkedList<Player>,
+    pub board: Board, // TODO: remove
+    pub fleet: Fleet, // TODO: remove
+    hits: LinkedList<(usize, usize)> // TODO: remove
 }
 
 impl Game {
     pub fn new() -> Game {
+        let board: Board = Board::new(BOARD_WIDTH, BOARD_HEIGHT);
+        let fleet: Fleet = Fleet::new();
         let mut game: Game = Game {
-            board: Board::new(BOARD_WIDTH, BOARD_HEIGHT),
-            fleet: Fleet::new(),
+            players: LinkedList::new(),
+            board: board,
+            fleet: fleet,
             hits: LinkedList::new()
         };
         game.fleet.create(&game.board);
         return game;
     }
 
-    pub fn update(&mut self) {
-        self.print();
+    pub fn get_players(&self) -> &LinkedList<Player> {
+        &self.players
+    }
+
+    pub fn run(&mut self) {
+        loop {
+            // TODO: update player here
+            self.print();
+            if self.is_finish() {
+                println!("You are done!");
+                break;
+            }
+            input::handle(self);
+        }
     }
 
     pub fn attack(&mut self, string: &str) -> bool {
-        match get_coords(&self.board, &string) {
+        match convert_to_point(&self.board, &string) {
             None => return false,
             Some(c) => {
                 let coords: (usize, usize) = (c.0, c.1);
@@ -96,7 +114,7 @@ impl Game {
     }
 }
 
-pub fn get_coords(board: &Board, string: &str) -> Option<(usize, usize)> {
+pub fn convert_to_point(board: &Board, string: &str) -> Option<(usize, usize)> {
     if string.len() < 2 || string.len() > 3 {
         println!("Invalid input");
         return None;
@@ -111,4 +129,9 @@ pub fn get_coords(board: &Board, string: &str) -> Option<(usize, usize)> {
         x = x + 1;
     }
     return None;
+}
+
+#[test]
+fn get_players_test() {
+    assert_eq!(0, Game::new().get_players().len());
 }

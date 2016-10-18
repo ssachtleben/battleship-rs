@@ -21,11 +21,11 @@ impl Shot {
 }
 
 #[test]
-fn test_get_x() {
+fn get_x_test() {
     assert_eq!(3, Shot::new(3, 5).get_x());
 }
 
 #[test]
-fn test_get_y() {
+fn get_y_test() {
     assert_eq!(5, Shot::new(3, 5).get_y());
 }

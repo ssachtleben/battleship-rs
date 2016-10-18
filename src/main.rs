@@ -5,7 +5,6 @@ extern crate terminal_size;
 use terminal_size::{Width, Height, terminal_size};
 
 use core::game::Game as Game;
-use core::input as input;
 
 pub mod core;
 pub mod models;
@@ -13,15 +12,7 @@ pub mod utils;
 
 fn main() {
     test_terminal_size();
-    let mut game: Game = Game::new();
-    loop {
-        game.update();
-        if game.is_finish() {
-            println!("You are done!");
-            break;
-        }
-        input::handle(&mut game);
-    }
+    Game::new().run();
 }
 
 fn test_terminal_size() {

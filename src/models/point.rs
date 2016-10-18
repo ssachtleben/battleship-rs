@@ -1,3 +1,5 @@
+use utils::stringutil as Stringutil;
+
 pub struct Point {
     x: usize,
     y: usize
@@ -11,6 +13,23 @@ impl Point {
         }
     }
 
+    pub fn from_string(string: &str) -> Option<Point> {
+        if string.len() < 2 || string.len() > 3 {
+            println!("Invalid input");
+            return None;
+        }
+        let first_char = String::from(string).to_uppercase().chars().skip(0).take(1).next().unwrap();
+        match Stringutil::get_position_in_alphabet(first_char) {
+            Some(x) => {
+                match string.split_at(1).1.parse::<usize>() {
+                    Ok(y) => return Some(Point::new(x, y)),
+                    Err(e) => return None
+                }
+            }
+            None => return None
+        }
+    }
+
     pub fn get_x(&self) -> usize {
         self.x
     }
@@ -21,11 +40,21 @@ impl Point {
 }
 
 #[test]
-fn test_get_x() {
+fn from_string_test() {
+    assert_eq!(true, Point::from_string("C5").is_some());
+    assert_eq!(true, Point::from_string("CC").is_none());
+    assert_eq!(true, Point::from_string("55").is_none());
+    let point: Point = Point::from_string("C5").unwrap();
+    assert_eq!(3, point.get_x());
+    assert_eq!(5, point.get_y());
+}
+
+#[test]
+fn get_x_test() {
     assert_eq!(3, Point::new(3, 5).get_x());
 }
 
 #[test]
-fn test_get_y() {
+fn get_y_test() {
     assert_eq!(5, Point::new(3, 5).get_y());
 }

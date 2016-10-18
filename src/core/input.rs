@@ -16,3 +16,14 @@ pub fn handle(game: &mut Game) {
         }
     }
 }
+
+pub fn handle2() -> Option<String> {
+    println!("Enter a attack point (for example A1):");
+    let mut line = String::new();
+    let input = stdin().read_line(&mut line);
+    let guess: Option<&str> = input.ok().map_or(None, |_| Some(line.trim()));
+    match guess {
+        None => return None,
+        Some(s) => return Some(String::from(s))
+    }
+}

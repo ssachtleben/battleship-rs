@@ -1,7 +1,11 @@
 [package]
 name = "battleship"
 version = "0.1.0"
-authors = ["ssachtleben <ssachtleben@gmail.com>"]
+authors = ["Sebastian Sachtleben <ssachtleben@gmail.com>"]
+repository = "https://github.com/ssachtleben/battleship-rs.git"
+homepage = "https://github.com/ssachtleben/battleship-rs.git"
+readme = "README.md"
+description = "A simple implementation of the game Battleship written in rust."
 
 [dependencies]
 rand = "^0.3.0"

@@ -47,32 +47,32 @@ impl Ship {
 }
 
 #[test]
-fn test_get_position() {
+fn get_position_test() {
     let ship: Ship = Ship::new(3, 5, Direction::Horizontal, 5);
     assert_eq!(3, ship.get_position().get_x());
     assert_eq!(5, ship.get_position().get_y());
 }
 
 #[test]
-fn test_get_direction() {
+fn get_direction_test() {
     let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
     assert_eq!(true, ship.is_direction(Direction::Horizontal)); // TODO: use get_direction func
 }
 
 #[test]
-fn test_is_direction() {
+fn is_direction_test() {
     let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
     assert_eq!(true, ship.is_direction(Direction::Horizontal));
 }
 
 #[test]
-fn test_get_length() {
+fn get_length_test() {
     let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
     assert_eq!(5, ship.get_length());
 }
 
 #[test]
-fn test_is_here() {
+fn is_here_test() {
     let ship1: Ship = Ship::new(2, 5, Direction::Horizontal, 3);
     assert_eq!(true, ship1.is_here(2, 5));
     assert_eq!(true, ship1.is_here(4, 5));
