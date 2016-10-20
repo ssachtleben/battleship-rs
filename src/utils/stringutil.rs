@@ -1,7 +1,7 @@
 static CHARACTERS: &'static str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-pub fn get_alphabet() -> String {
-    return String::from(CHARACTERS);
+pub fn get_alphabet() -> &'static str {
+    return CHARACTERS;
 }
 
 pub fn get_character_in_alphabet(number: usize) -> Option<char> {
@@ -15,14 +15,19 @@ pub fn get_position_in_alphabet(val: char) -> Option<usize> {
     }
 }
 
-#[test]
-fn get_character_in_alphabet_test() {
-    assert_eq!(Some('A'), get_character_in_alphabet(1));
-    assert_eq!(None, get_character_in_alphabet(27));
-}
+#[cfg(test)]
+mod tests {
+    use utils::stringutil as Stringutil;
 
-#[test]
-fn get_position_in_alphabet_test() {
-    assert_eq!(Some(5), get_position_in_alphabet('E'));
-    assert_eq!(None, get_position_in_alphabet('!'));
+    #[test]
+    fn get_character_in_alphabet() {
+        assert_eq!(Some('A'), Stringutil::get_character_in_alphabet(1));
+        assert_eq!(None, Stringutil::get_character_in_alphabet(27));
+    }
+
+    #[test]
+    fn get_position_in_alphabet() {
+        assert_eq!(Some(5), Stringutil::get_position_in_alphabet('E'));
+        assert_eq!(None, Stringutil::get_position_in_alphabet('!'));
+    }
 }

@@ -20,12 +20,17 @@ impl Shot {
     }
 }
 
-#[test]
-fn get_x_test() {
-    assert_eq!(3, Shot::new(3, 5).get_x());
-}
+#[cfg(test)]
+mod tests {
+    use models::shot::Shot as Shot;
 
-#[test]
-fn get_y_test() {
-    assert_eq!(5, Shot::new(3, 5).get_y());
+    #[test]
+    fn get_x() {
+        assert_eq!(3, Shot::new(3, 5).get_x());
+    }
+
+    #[test]
+    fn get_y() {
+        assert_eq!(5, Shot::new(3, 5).get_y());
+    }
 }

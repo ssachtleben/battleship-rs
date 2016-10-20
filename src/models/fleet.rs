@@ -8,11 +8,11 @@ use utils::stringutil as Stringutil;
 use std::collections::LinkedList;
 use rand::Rng;
 
-static FLEET_SIZE: [usize; 5] = [5, 4, 3, 3, 2];
+pub static FLEET_SIZE: [usize; 5] = [5, 4, 3, 3, 2]; // TODO: make this: Vec<usize> = vec![5, 4, 3, 3, 2];
 
 pub struct Fleet {
     size: [usize; 5],
-    pub ships: LinkedList<Ship>
+    ships: LinkedList<Ship>
 }
 
 impl Fleet {
@@ -24,11 +24,11 @@ impl Fleet {
     }
 
     pub fn get_size(&self) -> [usize; 5] {
-        return self.size;
+        self.size
     }
 
-    pub fn get_ships(&self) -> &LinkedList<Ship> {
-        return &self.ships;
+    pub fn get_ships(&mut self) -> &mut LinkedList<Ship> {
+        &mut self.ships
     }
 
     pub fn create(&mut self, board: &Board) {
@@ -78,33 +78,41 @@ impl Fleet {
         return false;
     }
 }
+#[cfg(test)]
+mod tests {
+    use models::board::Board as Board;
+    use models::fleet as fleet;
+    use models::fleet::Fleet as Fleet;
+    use models::ship::Direction as Direction;
+    use models::ship::Ship as Ship;
 
-#[test]
-fn get_size_test() {
-    assert_eq!(FLEET_SIZE, Fleet::new().get_size());
-}
+    #[test]
+    fn get_size() {
+        assert_eq!(fleet::FLEET_SIZE, Fleet::new().get_size());
+    }
 
-#[test]
-fn get_ships_test() {
-    assert_eq!(true, Fleet::new().get_ships().len() == 0);
-}
+    #[test]
+    fn get_ships() {
+        assert_eq!(true, Fleet::new().get_ships().len() == 0);
+    }
 
-#[test]
-fn create_test() {
-    let board: Board = Board::new(10, 10);
-    let mut fleet: Fleet = Fleet::new();
-    fleet.create(&board);
-    assert_eq!(FLEET_SIZE.len(), fleet.get_size().len());
-}
+    #[test]
+    fn create() {
+        let board: Board = Board::new(10, 10);
+        let mut fleet: Fleet = Fleet::new();
+        fleet.create(&board);
+        assert_eq!(fleet::FLEET_SIZE.len(), fleet.get_size().len());
+    }
 
-#[test]
-fn is_ship_here_test() {
-    let board: Board = Board::new(10, 10);
-    let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
-    let mut fleet: Fleet = Fleet::new();
-    fleet.add_ship(&board, ship);
-    assert_eq!(true, fleet.is_ship_here(1, 1));
-    assert_eq!(true, fleet.is_ship_here(5, 1));
-    assert_eq!(false, fleet.is_ship_here(1, 2));
-    assert_eq!(false, fleet.is_ship_here(6, 1));
+    #[test]
+    fn is_ship_here() {
+        let board: Board = Board::new(10, 10);
+        let ship: Ship = Ship::new(1, 1, Direction::Horizontal, 5);
+        let mut fleet: Fleet = Fleet::new();
+        fleet.add_ship(&board, ship);
+        assert_eq!(true, fleet.is_ship_here(1, 1));
+        assert_eq!(true, fleet.is_ship_here(5, 1));
+        assert_eq!(false, fleet.is_ship_here(1, 2));
+        assert_eq!(false, fleet.is_ship_here(6, 1));
+    }
 }

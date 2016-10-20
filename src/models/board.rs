@@ -1,19 +1,15 @@
-use models::fleet::Fleet as Fleet;
 use models::point::Point as Point;
 
 pub struct Board {
     width: usize,
-    height: usize,
-    fleet: Fleet
+    height: usize
 }
 
 impl Board {
     pub fn new(width: usize, height: usize) -> Board {
-        let fleet: Fleet = Fleet::new();
         Board {
             width: width,
-            height: height,
-            fleet: fleet
+            height: height
         }
     }
 
@@ -25,10 +21,6 @@ impl Board {
         return self.height;
     }
 
-    pub fn get_fleet(&self) -> &Fleet {
-        return &self.fleet;
-    }
-
     pub fn is_valid(&self, x: usize, y: usize) -> bool {
         return x > 0 && y > 0 && x <= self.get_width() && y <= self.get_height();
     }
@@ -38,30 +30,30 @@ impl Board {
     }
 }
 
-#[test]
-fn get_width_test() {
-    assert_eq!(3, Board::new(3, 5).get_width());
-}
+#[cfg(test)]
+mod tests {
+    use models::board::Board as Board;
 
-#[test]
-fn get_height_test() {
-    assert_eq!(5, Board::new(3, 5).get_height());
-}
+    #[test]
+    fn get_width() {
+        assert_eq!(3, Board::new(3, 5).get_width());
+    }
 
-#[test]
-fn get_fleet_test() {
-    assert_eq!(0, Board::new(3, 5).get_fleet().get_ships().len());
-}
+    #[test]
+    fn get_height() {
+        assert_eq!(5, Board::new(3, 5).get_height());
+    }
 
-#[test]
-fn is_valid_test() {
-    let board: Board = Board::new(10, 10);
-    assert_eq!(true, board.is_valid(1, 1));
-    assert_eq!(true, board.is_valid(10, 10));
-    assert_eq!(false, board.is_valid(0, 0));
-    assert_eq!(false, board.is_valid(1, 0));
-    assert_eq!(false, board.is_valid(0, 1));
-    assert_eq!(false, board.is_valid(11, 11));
-    assert_eq!(false, board.is_valid(11, 10));
-    assert_eq!(false, board.is_valid(10, 11));
+    #[test]
+    fn is_valid() {
+        let board: Board = Board::new(10, 10);
+        assert_eq!(true, board.is_valid(1, 1));
+        assert_eq!(true, board.is_valid(10, 10));
+        assert_eq!(false, board.is_valid(0, 0));
+        assert_eq!(false, board.is_valid(1, 0));
+        assert_eq!(false, board.is_valid(0, 1));
+        assert_eq!(false, board.is_valid(11, 11));
+        assert_eq!(false, board.is_valid(11, 10));
+        assert_eq!(false, board.is_valid(10, 11));
+    }
 }
